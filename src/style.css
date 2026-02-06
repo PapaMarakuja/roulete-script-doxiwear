@@ -1,0 +1,711 @@
+:root {
+    --primary-color: #204457;
+    --primary-hover: #1a3646;
+    --primary-dark: #0f1f29;
+
+    --secondary-color: #c7989a;
+    --secondary-hover: #d9b0b0;
+    --secondary-dark: #b58587;
+
+    --bg-overlay: rgba(32, 68, 87, 0.7);
+    --bg-modal: #E5BFBE;
+    --bg-button: var(--primary-color);
+    --bg-input: #ffffff;
+
+    --text-primary: #204457;
+    --text-secondary: #4a6375;
+    --text-white: #ffffff;
+
+    --border-color: #F1A4AC;
+    --border-focus: var(--primary-color);
+
+    --roulette-color-1: #F1A4AC;
+    --roulette-color-2: #E5BFBE;
+
+    --shadow-sm: 0 1px 2px 0 rgba(32, 68, 87, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(32, 68, 87, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(32, 68, 87, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(32, 68, 87, 0.15);
+
+    --transition-fast: 150ms ease-in-out;
+    --transition-normal: 300ms ease-in-out;
+    --transition-slow: 500ms ease-in-out;
+
+    --spacing-xxs: 0.25rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-full: 9999px;
+}
+
+/* Reset e Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+/* Conteúdo da Página (exemplo) */
+.page-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+}
+
+.page-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--primary-dark);
+}
+
+/* Botão Flutuante */
+.floating-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: var(--shadow-xl);
+    transition: all var(--transition-normal);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    animation: pulse 2s infinite;
+}
+
+.floating-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 25px 35px -5px rgba(99, 102, 241, 0.4);
+}
+
+.floating-button:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 25px 35px -5px rgba(99, 102, 241, 0.5);
+    }
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    animation: fadeIn var(--transition-normal);
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-overlay);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    background: var(--bg-modal);
+    border-radius: var(--radius-lg);
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp var(--transition-normal);
+    z-index: 1001;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slideDownClose {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+}
+
+.modal.closing {
+    animation: fadeOut var(--transition-normal) forwards;
+}
+
+.modal.closing .modal-content {
+    animation: slideDownClose var(--transition-normal) forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fixed-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    position: relative;
+    z-index: 20;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.modal-body {
+    padding: var(--spacing-sm);
+    overflow-y: auto;
+    flex: 1;
+    overscroll-behavior: contain;
+}
+
+/* Botão de Fechar */
+.modal-close {
+    background-color: #0000;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    border-radius: 50%;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--text-primary);
+}
+
+/* Título do Modal */
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    color: var(--primary-dark);
+}
+
+.modal-subtitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+/* Container da Roleta */
+.roulette-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto var(--spacing-xl);
+}
+
+#rouletteCanvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: var(--shadow-lg);
+}
+
+.roulette-pointer {
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    left: auto;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 25px solid var(--primary-color);
+    border-left: none;
+    filter: drop-shadow(-4px 0 6px rgba(0, 0, 0, 0.2));
+    z-index: 10;
+}
+
+/* Formulário */
+.roulette-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxs);
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.form-group input[type="email"] {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    background: var(--bg-input);
+    transition: all var(--transition-fast);
+}
+
+.form-group input[type="email"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Checkbox */
+.checkbox-group {
+    margin-top: var(--spacing-xxs);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-top: 0.25rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.checkbox-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Botão de Girar */
+.spin-button {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+    margin-top: var(--spacing-md);
+}
+
+.spin-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.spin-button:active {
+    transform: translateY(0);
+}
+
+.spin-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.spin-button.hiding {
+    height: 0 !important;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    overflow: hidden;
+    border: none;
+    box-shadow: none;
+    pointer-events: none;
+    transition: all 300ms ease-in-out;
+}
+
+.button-text {
+    position: relative;
+    z-index: 1;
+}
+
+/* Mensagem de Resultado */
+.result-message {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-weight: 600;
+    display: none;
+    animation: slideDown var(--transition-normal);
+}
+
+.result-message.show {
+    display: block;
+}
+
+.result-message.success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 2px solid #10b981;
+}
+
+.result-message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 2px solid #ef4444;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsividade */
+@media (max-width: 640px) {
+    .floating-button {
+        bottom: 15%;
+        right: 1.5rem;
+        padding: 0.875rem 1.25rem;
+        font-size: 1rem;
+    }
+
+    .modal-content {
+        padding: var(--spacing-sm);
+        padding-top: 0;
+        width: 95%;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .roulette-container {
+        width: 250px;
+        height: 250px;
+    }
+
+    .spin-button {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Animação de Rotação da Roleta */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinning {
+    animation: spin 0.1s linear infinite;
+}
+
+/* --- Estilos para o Cupom --- */
+
+.result-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.result-content .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+.result-content p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.result-content p strong {
+    color: #10b981;
+}
+
+/* Container do cupom */
+.coupon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border: 2px dashed #10b981;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    user-select: none;
+}
+
+.coupon-wrapper:hover {
+    transform: scale(1.05);
+}
+
+/* O código do cupom */
+.coupon {
+    font-family: 'Courier New', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #10b981;
+    text-transform: uppercase;
+}
+
+/* Dica visual */
+.hint {
+    font-size: 0.8rem;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* Feedback de "copiado" */
+.copy-feedback {
+    display: none;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #10b981;
+    font-weight: 600;
+}
+
+.copy-feedback.show {
+    display: block;
+    animation: fadeInOutFeedback 2s ease-in-out forwards;
+}
+
+@keyframes fadeInOutFeedback {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    15% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    85% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsividade para o cupom */
+@media (max-width: 640px) {
+    .coupon {
+        font-size: 1.2rem;
+    }
+
+    .hint {
+        font-size: 0.75rem;
+    }
+}
+
+/* Floating Button Restyling for SVG */
+.floating-button {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Maintain pulse or switch to float? User asked for floating text. 
+       Let's keep the button floating animation if requested, assuming 'floating-button' suggests movement. 
+       The SVG itself: */
+    animation: floating 3s ease-in-out infinite;
+    overflow: visible !important;
+}
+
+.floating-button svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.floating-button:hover svg {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* Bubble Container */
+.roulette-bubble {
+    position: absolute;
+    bottom: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    pointer-events: none;
+
+    /* Animation for floating up and down independent of button */
+    animation: bubbleFloat 3s ease-in-out infinite;
+    animation-delay: 0.5s;
+    /* Offset from button float */
+}
+
+/* Triangle for bubble */
+.roulette-bubble::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+@keyframes floating {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes bubbleFloat {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+@keyframes textFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.roulette-text-anim {
+    animation: textFadeIn 0.5s ease-out forwards;
+}
