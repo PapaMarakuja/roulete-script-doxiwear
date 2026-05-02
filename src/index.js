@@ -7,6 +7,8 @@ import rouletteHTML from './roulette.html?raw';
 import { CONFIG } from './config';
 import confetti from 'canvas-confetti';
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 // ============================================
 // CONFIGURAÇÕES DA ROLETA
 // ============================================
@@ -14,12 +16,12 @@ import confetti from 'canvas-confetti';
 const ROULETTE_CONFIG = {
     // Prêmios da roleta
     prizes: [
-        { text: '20% OFF', color: '#F1A4AC', value: 20, weight: 0, coupon: null },
-        { text: '5% OFF', color: '#E5BFBE', value: 5, weight: 0, coupon: null },
-        { text: '15% OFF', color: '#F1A4AC', value: 15, weight: 10, coupon: 'SALSICHA15' },
-        { text: 'Frete Grátis', color: '#E5BFBE', value: 'free-shipping', weight: 0, coupon: null },
-        { text: '25% OFF', color: '#F1A4AC', value: 25, weight: 0, coupon: null },
-        { text: '10% OFF', color: '#E5BFBE', value: 10, weight: 90, coupon: 'SORTE10' },
+        { text: '20% OFF', color: '#F5B8BF', value: 20, weight: 0, coupon: null },
+        { text: '5% OFF', color: '#F1A4AC', value: 5, weight: 0, coupon: null },
+        { text: '15% OFF', color: '#F5B8BF', value: 15, weight: 10, coupon: 'SALSICHA15' },
+        { text: 'Frete Grátis', color: '#F1A4AC', value: 'free-shipping', weight: 0, coupon: null },
+        { text: '25% OFF', color: '#F5B8BF', value: 25, weight: 0, coupon: null },
+        { text: '10% OFF', color: '#F1A4AC', value: 10, weight: 90, coupon: 'SORTE10' },
     ],
 
     // Configurações de animação
@@ -45,7 +47,8 @@ const elements = {
     acceptTerms: document.getElementById('acceptTerms'),
     spinButton: document.getElementById('spinButton'),
     canvas: document.getElementById('rouletteCanvas'),
-    resultMessage: document.getElementById('resultMessage')
+    resultMessage: document.getElementById('resultMessage'),
+    formInputs: document.querySelector('.form-inputs-container')
 };
 
 // ============================================
@@ -189,27 +192,15 @@ class RouletteWheel {
         const prize = this.prizes[prizeIndex];
 
         // Calcular ângulo para centralizar o prêmio no ponteiro (Direita / 0 radianos)
-        // O ponteiro está em 0. O centro da fatia é `index * angle + angle/2 - PI/2`.
-        // Queremos que (Center + Rotation) % 2PI = 0
-        // Logo Rotation = -Center
         const anglePerPrize = (2 * Math.PI) / this.prizes.length;
         const sliceCenterAngle = prizeIndex * anglePerPrize + anglePerPrize / 2 - Math.PI / 2;
 
         // Adicionar voltas mínimas e ajustar para chegar no alvo
         const minRotation = ROULETTE_CONFIG.minSpins * 2 * Math.PI;
 
-        // Calcular rotação base para chegar ao zero a partir do centro da fatia
-        // Adicionamos 2PI extra para garantir que a subtração não fique negativa de forma errada antes de somar as voltas
-        // Mas a lógica simples é: alvo é -sliceCenterAngle.
-        // Adicionamos voltas completas.
-
-        // Adicionar um pequeno jitter aleatório (+/- 20% da fatia) para não ficar robótico
+        // Adicionar um pequeno jitter aleatório (+/- 20% da fatia)
         const jitter = (Math.random() - 0.5) * anglePerPrize * 0.4;
 
-        // Rotação total: Voltas mínimas + ajuste angular + jitter
-        // O ajuste angular deve ser positivo (horário). 
-        // Se sliceCenterAngle for negativo (top-right), -sliceCenter é positivo.
-        // Queremos Rotation tal que: Rotation + sliceCenter = 0 (mod 2PI)
         let targetRotation = -sliceCenterAngle + jitter;
 
         // Normalizar para positivo
@@ -235,7 +226,6 @@ class RouletteWheel {
                 requestAnimationFrame(animate);
             } else {
                 this.isSpinning = false;
-                // Retornar o prêmio pre-calculado para garantir consistência
                 onComplete(prize);
                 scrollIntoVIew(elements.resultMessage);
             }
@@ -256,7 +246,6 @@ const ModalManager = {
     },
 
     close() {
-        // Se já estiver fechando ou fechado, ignora
         if (!elements.modal.classList.contains('active') || elements.modal.classList.contains('closing')) return;
 
         elements.modal.classList.add('closing');
@@ -265,31 +254,49 @@ const ModalManager = {
             elements.modal.classList.remove('active');
             elements.modal.classList.remove('closing');
             document.body.style.overflow = '';
-            elements.modal.removeEventListener('animationend', handleAnimationEnd); // Limpar listener
+            elements.modal.removeEventListener('animationend', handleAnimationEnd);
         };
 
-        // Escutar o fim da animação no .modal-content (que tem a animação mais longa ou principal)
-        // Ou no próprio modal se for o fadeOut. Usando 'once: true' pode ser arriscado se houver múltiplas animações (overlay e content).
-        // A melhor prática é ouvir no elemento animado. O .modal tem fadeOut.
         elements.modal.addEventListener('animationend', handleAnimationEnd, { once: true });
     },
 
     showResult(prize, success = true) {
+        // Extrair apenas o número do texto se possível (ex: "20% OFF" -> "20%")
+        const discountText = prize.text.match(/\d+%/)?.[0] || prize.text;
+
         const message = success
             ? `
-            <div class="result-content">
-                <p class="title">🎉 Parabéns!</p>
-                <p>Você ganhou: <strong>${prize.text}</strong></p>
-
-                <div class="coupon-wrapper" data-coupon="${prize.coupon}">
-                    <span class="coupon">${prize.coupon}</span>
-                    <span class="hint">Toque para copiar</span>
+            <div class="result-content animate-coupon">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <p class="title">🎉 PARABÉNS!</p>
+                
+                <div class="coupon-card">
+                    <div class="coupon-left">
+                        <span class="percentage-badge">${discountText}</span>
+                    </div>
+                    <div class="coupon-right">
+                        <p class="coupon-label">CUPOM DE DESCONTO</p>
+                        <div class="coupon-code-box" data-coupon="${prize.coupon}">
+                            <span class="coupon-code">${prize.coupon}</span>
+                            <i class="far fa-copy"></i>
+                        </div>
+                        <p class="coupon-hint">Toque para copiar</p>
+                    </div>
+                    <div class="coupon-cutout top"></div>
+                    <div class="coupon-cutout bottom"></div>
                 </div>
 
-                <span class="copy-feedback">Copiado!</span>
+                <span class="copy-feedback"><i class="fas fa-check"></i> Copiado!</span>
             </div>
         `
-            : `<p>❌ Ops! Algo deu errado. Tente novamente.</p>`;
+            : `
+            <div class="result-content error">
+                <i class="fas fa-times-circle" style="font-size: 3rem; color: var(--error-text);"></i>
+                <p>❌ Ops! Algo deu errado. Tente novamente.</p>
+            </div>
+            `;
 
         elements.resultMessage.innerHTML = message;
         elements.resultMessage.className = `result-message show ${success ? 'success' : 'error'}`;
@@ -298,7 +305,7 @@ const ModalManager = {
     },
 
     initCopy() {
-        const couponWrapper = document.querySelector('.coupon-wrapper');
+        const couponWrapper = document.querySelector('.coupon-code-box');
         const feedback = document.querySelector('.copy-feedback');
 
         if (!couponWrapper || !feedback) return;
@@ -310,7 +317,6 @@ const ModalManager = {
                 await navigator.clipboard.writeText(couponCode);
 
                 feedback.classList.add('show');
-                scrollIntoVIew(feedback);
                 setTimeout(() => feedback.classList.remove('show'), 2000);
 
             } catch (err) {
@@ -373,6 +379,7 @@ function init() {
     elements.spinButton = document.getElementById('spinButton');
     elements.canvas = document.getElementById('rouletteCanvas');
     elements.resultMessage = document.getElementById('resultMessage');
+    elements.formInputs = document.querySelector('.form-inputs-container');
 
     if (CookieManager.hasPlayed()) {
         elements.floatingButton.style.display = 'none';
@@ -468,13 +475,17 @@ function handleFormSubmit(e) {
         return;
     }
 
+    // HIDE INPUTS AND CHECKBOX
+    if (elements.formInputs) {
+        elements.formInputs.classList.add('hiding-during-spin');
+    }
+    elements.spinButton.classList.add('hiding');
+
     elements.spinButton.disabled = true;
     elements.emailInput.disabled = true;
 
     rouletteWheel.spin((prize) => {
         CookieManager.markAsPlayed(email, prize);
-
-        elements.spinButton.classList.add('hiding');
 
         confetti({
             particleCount: 150,
@@ -485,12 +496,9 @@ function handleFormSubmit(e) {
 
         ModalManager.showResult(prize, true);
         saveToSupabase(email, prize);
-
-        setTimeout(() => {
-            elements.floatingButton.style.display = 'none';
-        }, 5000);
     });
 }
+
 
 
 // ============================================

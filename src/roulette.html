@@ -17,7 +17,7 @@
     <div class="modal-content">
         <div class="fixed-modal-header">
             <h2 id="modalTitle" class="modal-title">Roleta de Descontos Doxiwear 🐶</h2>
-            <button class="modal-close" aria-label="Fechar modal">&times;</button>
+            <button class="modal-close" aria-label="Fechar modal"><i class="fas fa-times"></i></button>
         </div>
 
         <div class="modal-body">
@@ -26,27 +26,28 @@
                 <div class="roulette-pointer"></div>
             </div>
 
-            <p id="modalSubtitle" class="modal-subtitle">
-                Informe seu e-mail e gire a roleta para concorrer a descontos exclusivos!
-            </p>
-
             <form id="rouletteForm" class="roulette-form">
-                <div class="form-group">
-                    <label for="emailInput">Seu e-mail:</label>
-                    <input type="email" id="emailInput" name="email" placeholder="seuemail@exemplo.com"
-                        autocomplete="email" inputmode="email" required>
-                </div>
+                <div class="form-inputs-container">
+                    <p id="modalSubtitle" class="modal-subtitle">
+                        Informe seu e-mail e gire a roleta para concorrer a descontos exclusivos!
+                    </p>
+                    <div class="form-group">
+                        <label for="emailInput">Seu e-mail:</label>
+                        <input type="email" id="emailInput" name="email" placeholder="seuemail@exemplo.com"
+                            autocomplete="email" inputmode="email" required>
+                    </div>
 
-                <div class="form-group checkbox-group">
-                    <label class="checkbox-label" required>
-                        <input type="checkbox" id="acceptTerms" name="acceptTerms">
-                        <span class="checkbox-text">Ao informar meu e-mail, aceito receber comunicações
-                            promocionais.</span>
-                    </label>
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
+                            <span class="checkbox-text">Ao informar meu e-mail, aceito receber comunicações
+                                promocionais.</span>
+                        </label>
+                    </div>
                 </div>
 
                 <button type="submit" class="spin-button" id="spinButton">
-                    <span class="button-text">Girar a Roleta</span>
+                    <span class="button-text"><i class="fas fa-sync-alt"></i> Girar a Roleta</span>
                 </button>
             </form>
 

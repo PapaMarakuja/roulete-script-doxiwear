@@ -1,0 +1,200 @@
+:root {
+  /* =========================================
+     Brand Colors
+     ========================================= */
+  --pink-light: #F5B8BF;
+  --pink-dark: #F1A4AC;
+  --cream: #F9E4E0;
+  --navy: #204457;
+
+  /* =========================================
+     Backgrounds & Surfaces
+     ========================================= */
+  --bg-page: #F4EBE8;
+  --bg-gradient: linear-gradient(180deg, #FDF5F4 0%, var(--cream) 100%);
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 4px 30px rgba(32, 68, 87, 0.08);
+  --background: #FFFFFF;
+
+  /* =========================================
+     Typography
+     ========================================= */
+  --text-main: #1E3448;
+  --text-muted: #6B7C8D;
+  --text: #1E3448;
+
+  /* =========================================
+     Inputs, Borders & Interactive
+     ========================================= */
+  --input-bg: #EEF3F8;
+  --input-placeholder: #A0B0BC;
+  --input-icon: #8FA0AE;
+  --border: #E8DDD9;
+  --hover: rgba(245, 184, 191, 0.08);
+  --border-radius: 12px;
+  --card-radius: 16px;
+
+  /* =========================================
+     Status & Feedback
+     ========================================= */
+  --success: #22c55e;
+  --success-hover: #16a34a;
+  --info: #3b82f6;
+  --info-hover: #2563eb;
+  --warning: #f59e0b;
+  --warning-hover: #d97706;
+  --error: #ef4444;
+  --error-hover: #dc2626;
+  --error-color: #e05151;
+  --error-text: #c93a3a;
+  --primary: var(--info);
+
+  /* =========================================
+     Layout Components (Sidebar, Header, etc)
+     ========================================= */
+  --sidebar-bg: #FFFFFF;
+  --sidebar-text: #1E3448;
+  --sidebar-text-muted: #6B7C8D;
+  --sidebar-hover: rgba(245, 184, 191, 0.15);
+  --sidebar-active-bg: rgba(245, 184, 191, 0.25);
+  --sidebar-active-text: var(--navy);
+  --sidebar-border: #EAE0DC;
+
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --header-border: #EAE0DC;
+
+  --dropdown-bg: #FFFFFF;
+  --dropdown-hover: #F6EFEC;
+  --dropdown-shadow: 0 8px 40px rgba(32, 68, 87, 0.12);
+
+  /* =========================================
+     Specific Business Logic (Commissions)
+     ========================================= */
+  --commission-color: #0284c7;
+  --commission-bg: rgba(2, 132, 199, 0.08);
+}
+
+/* =========================================
+   Base Input Styles
+   ========================================= */
+.input-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.input-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.input-right-label {
+  font-size: 13px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--input-icon);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--input-bg);
+  border: 1.5px solid transparent;
+  border-radius: var(--border-radius);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-field::placeholder {
+  color: var(--input-placeholder);
+}
+
+.input-field:focus {
+  border-color: var(--pink-light);
+  box-shadow: 0 0 0 3px rgba(245, 184, 191, 0.2);
+}
+
+.input-has-icon {
+  padding-left: 44px;
+}
+
+.input-has-suffix {
+  padding-right: 50px;
+}
+
+.input-suffix {
+  position: absolute;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--input-icon);
+}
+
+/* =========================================
+   Custom Checkbox
+   ========================================= */
+.custom-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  user-select: none;
+}
+
+.custom-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid #CFD8DC;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.custom-checkbox:checked {
+  background: var(--pink-light);
+  border-color: var(--pink-light);
+}
+
+.custom-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--navy);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox-label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
