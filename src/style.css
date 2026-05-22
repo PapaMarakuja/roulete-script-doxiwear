@@ -139,7 +139,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--bg-overlay, rgba(0, 0, 0, 0.7));
     backdrop-filter: blur(4px);
     display: block !important;
 }
@@ -256,7 +256,7 @@ body {
 .modal-title {
     font-size: 32px;
     font-weight: 700;
-    text-align: center;
+    text-align: start;
     margin: 0;
     color: var(--navy);
     letter-spacing: -0.02em;
@@ -333,8 +333,8 @@ body {
 }
 
 .form-group input[type="email"]:focus {
-    border-color: var(--pink-light);
-    box-shadow: 0 0 0 3px rgba(245, 184, 191, 0.2);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
 }
 
 /* Checkbox */
@@ -366,7 +366,7 @@ body {
 
 /* Botão de Girar */
 .spin-button {
-    background: linear-gradient(135deg, var(--pink-light), var(--pink-dark));
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-hover));
     color: var(--navy);
     border: none;
     padding: 18px 32px;
@@ -375,7 +375,7 @@ body {
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all var(--transition-fast);
-    box-shadow: 0 4px 15px rgba(245, 184, 191, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     position: relative;
     overflow: hidden;
     margin-top: var(--spacing-md);
@@ -385,7 +385,7 @@ body {
 
 .spin-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(245, 184, 191, 0.6);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     filter: brightness(1.05);
 }
 
@@ -426,6 +426,7 @@ body {
     font-weight: 600;
     display: none;
     animation: slideDown var(--transition-normal);
+    padding-bottom: 46px;
 }
 
 .result-message.show {
@@ -507,7 +508,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
 }
 
 .result-content .title {
@@ -882,4 +883,153 @@ body {
 .success-icon {
     font-size: 48px;
     color: #10b981;
+}
+
+/* ============================================
+   SISTEMA DE TEMAS
+   ============================================ */
+
+/* Badge emoji no botão flutuante */
+.theme-badge {
+    position: absolute;
+    top: 0;
+    right: -8px;
+    font-size: 26px;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 1001;
+    animation:
+        themeBadgePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+        themeBadgeFloat 2.5s ease-in-out infinite 0.6s;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+@keyframes themeBadgePop {
+    0% {
+        transform: scale(0) rotate(-20deg);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.25) rotate(8deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes themeBadgeFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-6px) rotate(10deg);
+    }
+}
+
+/* Faixa decorativa de emojis no header do modal */
+.theme-decoration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 24px 10px;
+    flex-shrink: 0;
+}
+
+.theme-deco-emoji {
+    font-size: 22px;
+    display: inline-block;
+    animation: decoFloat 2.8s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes decoFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(-7px) rotate(5deg);
+    }
+}
+
+/* Ponteiro temático */
+#doxiRouletteRoot .roulette-pointer {
+    border-right-color: var(--primary-color);
+}
+
+/* ---- Tema: Halloween ---- */
+[data-theme="halloween"] .modal-title {
+    color: #FF6B00;
+}
+
+[data-theme="halloween"] .result-message.success {
+    background: #1a0a2e;
+    border-color: #FF6B00;
+    color: #FF8C00;
+}
+
+[data-theme="halloween"] .result-content .title {
+    color: #FF6B00;
+}
+
+[data-theme="halloween"] .coupon-card {
+    background: #1a0a2e;
+    border-color: #FF6B00;
+}
+
+[data-theme="halloween"] .coupon-code {
+    color: #FF8C00;
+}
+
+[data-theme="halloween"] .coupon-label,
+[data-theme="halloween"] .coupon-hint {
+    color: #b08ee0;
+}
+
+/* ---- Tema: Christmas ---- */
+[data-theme="christmas"] .modal-title {
+    color: #165C30;
+}
+
+[data-theme="christmas"] .result-message.success {
+    background: #f0faf4;
+    border-color: #165C30;
+    color: #165C30;
+}
+
+[data-theme="christmas"] .result-content .title {
+    color: #165C30;
+}
+
+[data-theme="christmas"] .coupon-code {
+    color: #165C30;
+}
+
+/* ---- Tema: Valentines ---- */
+[data-theme="valentines"] .modal-title {
+    color: #B5254B;
+}
+
+[data-theme="valentines"] .result-message.success {
+    background: #fff0f4;
+    border-color: #FF6B8B;
+    color: #B5254B;
+}
+
+[data-theme="valentines"] .result-content .title {
+    color: #B5254B;
+}
+
+[data-theme="valentines"] .coupon-code {
+    color: #B5254B;
 }

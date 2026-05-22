@@ -8,6 +8,19 @@ import { CONFIG } from './config';
 import confetti from 'canvas-confetti';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { THEMES } from './themes.js';
+
+// ============================================
+// TEMA ATIVO DA ROLETA
+// ============================================
+// Troque o valor abaixo para mudar o tema:
+//   'default'    → Padrão Doxiwear (rosa / azul-marinho)
+//   'valentines' → Dia dos Namorados (vermelho / rosa)
+//   'halloween'  → Halloween (laranja / roxo)
+//   'christmas'  → Natal (vermelho / verde)
+// ============================================
+
+const ACTIVE_THEME = 'default';
 
 // ============================================
 // CONFIGURAÇÕES DA ROLETA
@@ -16,12 +29,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 const ROULETTE_CONFIG = {
     // Prêmios da roleta
     prizes: [
-        { text: '20% OFF', color: '#F5B8BF', value: 20, weight: 0, coupon: null },
-        { text: '5% OFF', color: '#F1A4AC', value: 5, weight: 0, coupon: null },
-        { text: '15% OFF', color: '#F5B8BF', value: 15, weight: 10, coupon: 'SALSICHA15' },
-        { text: 'Frete Grátis', color: '#F1A4AC', value: 'free-shipping', weight: 0, coupon: null },
-        { text: '25% OFF', color: '#F5B8BF', value: 25, weight: 0, coupon: null },
-        { text: '10% OFF', color: '#F1A4AC', value: 10, weight: 90, coupon: 'SORTE10' },
+        { text: '20% OFF', value: 20, weight: 0, coupon: null },
+        { text: '5% OFF', value: 5, weight: 90, coupon: 'ROLETA5' },
+        { text: '15% OFF', value: 15, weight: 0, coupon: null },
+        { text: 'Frete Grátis', value: 'free-shipping', weight: 0, coupon: null },
+        { text: '25% OFF', value: 25, weight: 0, coupon: null },
+        { text: '10% OFF', value: 10, weight: 10, coupon: 'XIXA10' },
     ],
 
     // Configurações de animação
@@ -113,6 +126,7 @@ class RouletteWheel {
         const radius = canvas.width / 2 - 10;
         const numPrizes = this.prizes.length;
         const anglePerPrize = (2 * Math.PI) / numPrizes;
+        const theme = THEMES[ACTIVE_THEME];
 
         // Limpar canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -130,12 +144,15 @@ class RouletteWheel {
             const startAngle = index * anglePerPrize - Math.PI / 2;
             const endAngle = startAngle + anglePerPrize;
 
+            // Cor da fatia vem do tema
+            const sliceColor = theme.wheelColors[index % theme.wheelColors.length];
+
             // Desenhar fatia
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.closePath();
-            ctx.fillStyle = prize.color;
+            ctx.fillStyle = sliceColor;
             ctx.fill();
 
             // Borda branca
@@ -161,7 +178,7 @@ class RouletteWheel {
         ctx.arc(centerX, centerY, 25, 0, 2 * Math.PI);
         ctx.fillStyle = '#ffffff';
         ctx.fill();
-        ctx.strokeStyle = '#AB7C7B';
+        ctx.strokeStyle = theme.centerColor;
         ctx.lineWidth = 4;
         ctx.stroke();
 
@@ -263,14 +280,14 @@ const ModalManager = {
     showResult(prize, success = true) {
         // Extrair apenas o número do texto se possível (ex: "20% OFF" -> "20%")
         const discountText = prize.text.match(/\d+%/)?.[0] || prize.text;
+        const resultEmoji = THEMES[ACTIVE_THEME].resultEmoji;
 
         const message = success
             ? `
             <div class="result-content animate-coupon">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <p class="title">🎉 PARABÉNS!</p>
+                <span class="copy-feedback"><i class="fas fa-check"></i> Copiado!</span>
+                
+                <p class="title">${resultEmoji} PARABÉNS!</p>
                 
                 <div class="coupon-card">
                     <div class="coupon-left">
@@ -288,7 +305,6 @@ const ModalManager = {
                     <div class="coupon-cutout bottom"></div>
                 </div>
 
-                <span class="copy-feedback"><i class="fas fa-check"></i> Copiado!</span>
             </div>
         `
             : `
@@ -358,11 +374,54 @@ const ModalManager = {
 let rouletteWheel = null;
 
 function injectRouletteHTML() {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = rouletteHTML;
+    const wrapper = document.createElement('div');
+    wrapper.id = 'doxiRouletteRoot';
+    wrapper.innerHTML = rouletteHTML;
+    document.body.appendChild(wrapper);
+}
 
-    while (tempDiv.firstChild) {
-        document.body.appendChild(tempDiv.firstChild);
+function applyTheme() {
+    const theme = THEMES[ACTIVE_THEME];
+    const root = document.getElementById('doxiRouletteRoot');
+
+    // Aplicar variáveis CSS no container (cascateia para todos os filhos)
+    if (root) {
+        Object.entries(theme.cssVars).forEach(([key, value]) => {
+            root.style.setProperty(key, value);
+        });
+    }
+
+    // Badge emoji no botão flutuante
+    if (theme.badgeEmoji && elements.floatingButton) {
+        const badge = document.createElement('span');
+        badge.className = 'theme-badge';
+        badge.setAttribute('aria-hidden', 'true');
+        badge.textContent = theme.badgeEmoji;
+        elements.floatingButton.appendChild(badge);
+    }
+
+    // Decoração com emojis no header do modal
+    if (theme.decoEmojis && theme.decoEmojis.length > 0) {
+        const header = document.querySelector('.fixed-modal-header');
+        if (header) {
+            const deco = document.createElement('div');
+            deco.className = 'theme-decoration';
+            deco.setAttribute('aria-hidden', 'true');
+            theme.decoEmojis.forEach((emoji, i) => {
+                const span = document.createElement('span');
+                span.className = 'theme-deco-emoji';
+                span.textContent = emoji;
+                span.style.animationDelay = `${i * 0.3}s`;
+                deco.appendChild(span);
+            });
+            header.insertAdjacentElement('afterend', deco);
+        }
+    }
+
+    // Marcar tema no modal para CSS específico
+    const modal = document.getElementById('rouletteModal');
+    if (modal) {
+        modal.setAttribute('data-theme', ACTIVE_THEME);
     }
 }
 
@@ -380,6 +439,9 @@ function init() {
     elements.canvas = document.getElementById('rouletteCanvas');
     elements.resultMessage = document.getElementById('resultMessage');
     elements.formInputs = document.querySelector('.form-inputs-container');
+
+    // Aplicar tema visual
+    applyTheme();
 
     if (CookieManager.hasPlayed()) {
         elements.floatingButton.style.display = 'none';
@@ -487,12 +549,7 @@ function handleFormSubmit(e) {
     rouletteWheel.spin((prize) => {
         CookieManager.markAsPlayed(email, prize);
 
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            zIndex: 2000
-        });
+        fireConfetti();
 
         ModalManager.showResult(prize, true);
         saveToSupabase(email, prize);
@@ -556,7 +613,7 @@ if (document.readyState === 'loading') {
 // LÓGICA TEXTO FLUTUANTE ANIMADO
 // ============================================
 
-const floatingTexts = ["Descontos Doxi", "Tente a sorte", "Gire e ganhe"];
+const floatingTexts = THEMES[ACTIVE_THEME].floatingTexts;
 let currentTextIndex = 0;
 
 function startTextAnimation() {
@@ -578,4 +635,79 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startTextAnimation);
 } else {
     startTextAnimation();
+}
+
+// ============================================
+// CONFETTI COM EMOJIS TEMÁTICOS
+// ============================================
+
+function fireEmojiConfetti(emojis) {
+    // canvas-confetti suporta shapeFromText a partir da v1.6.0
+    const shapes = emojis.map(emoji =>
+        confetti.shapeFromText({ text: emoji, scalar: 2 })
+    );
+
+    const defaults = {
+        origin: { y: 0.7 },
+        zIndex: 9999999991,
+        shapes,
+        scalar: 2,
+    };
+
+    confetti({ ...defaults, particleCount: 30, spread: 25 });
+
+    setTimeout(() => confetti({
+        ...defaults, particleCount: 25, spread: 50
+    }), 200);
+
+    setTimeout(() => confetti({
+        ...defaults, particleCount: 35, spread: 70, decay: 0.91, scalar: 1.8
+    }), 400);
+
+    setTimeout(() => confetti({
+        ...defaults, particleCount: 20, spread: 90, startVelocity: 25, decay: 0.92, scalar: 2.2
+    }), 600);
+}
+
+function fireConfetti() {
+    const theme = THEMES[ACTIVE_THEME];
+
+    // Confetti temático com emojis
+    if (theme.confettiEmojis) {
+        fireEmojiConfetti(theme.confettiEmojis);
+        return;
+    }
+
+    // Confetti padrão (tema default)
+    var count = 300;
+    var defaults = {
+        origin: { y: 0.7 },
+        zIndex: 9999999991
+    }
+
+    confetti({
+        spread: 25,
+        particleCount: Math.floor(count * 0.25),
+        ...defaults
+    });
+    confetti({
+        spread: 40,
+        particleCount: Math.floor(count * 0.2),
+        ...defaults
+    });
+    confetti({
+        spread: 60,
+        particleCount: Math.floor(count * 0.35),
+        decay: 0.91,
+        scalar: 0.8,
+        ...defaults
+    });
+    confetti({
+        spread: 70,
+        particleCount: Math.floor(count * 0.25),
+        startVelocity: 25,
+        decay: 0.92,
+        scalar: 1.2,
+        ...defaults
+    });
 }
