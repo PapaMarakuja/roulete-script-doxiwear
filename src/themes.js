@@ -39,13 +39,14 @@ export const THEMES = {
         resultEmoji: '🎉',
         badgeEmoji: '🐶',
         decoEmojis: ['🐶', '🦴', '🐾', '🌭'],
+        cookieExpireDays: 7,
     },
 
     // -------------------------------------------
-    // VALENTINES — Dia dos Namorados
+    // VALENTINES — Valentine's Day (Internacional)
     // -------------------------------------------
     valentines: {
-        name: 'Valentines 💝',
+        name: 'Valentines Day 💝',
         cssVars: {
             '--primary-color': '#B5254B',
             '--primary-hover': '#8E1A39',
@@ -60,10 +61,37 @@ export const THEMES = {
         pointerColor: '#B5254B',
         centerColor: '#FF6B8B',
         confettiEmojis: ['💕', '❤️', '💘', '💝', '💖', '🌹'],
-        floatingTexts: ['Amor no ar! 💕', 'Presente especial', 'Gire e se apaixone'],
+        floatingTexts: ['Amor está no ar! 💕', 'Descontos com amor 💘', 'Gire e ganhe 💖'],
         resultEmoji: '💝',
         badgeEmoji: '💕',
         decoEmojis: ['💕', '❤️', '💘', '💖'],
+        cookieExpireDays: 1,
+    },
+
+    // -------------------------------------------
+    // NAMORADOS — Dia dos Namorados (Brasil)
+    // -------------------------------------------
+    namorados: {
+        name: 'Dia dos Namorados 💝',
+        cssVars: {
+            '--primary-color': '#B5254B',
+            '--primary-hover': '#8E1A39',
+            '--primary-dark': '#6B1028',
+            '--secondary-color': '#FF6B8B',
+            '--secondary-hover': '#E8456C',
+            '--secondary-dark': '#C0304F',
+            '--bg-overlay': 'rgba(131, 20, 60, 0.75)',
+            '--border-focus': '#FF6B8B',
+        },
+        wheelColors: ['#FF8FA3', '#C0395A'],
+        pointerColor: '#B5254B',
+        centerColor: '#FF6B8B',
+        confettiEmojis: ['💕', '❤️', '💘', '💝', '💖', '🌹'],
+        floatingTexts: ['Amor está no ar! 💕', 'Descontos amorosos 💘', 'Gire e se apaixone 🌹'],
+        resultEmoji: '💝',
+        badgeEmoji: '💕',
+        decoEmojis: ['💕', '❤️', '💘', '💖'],
+        cookieExpireDays: 1,
     },
 
     // -------------------------------------------
@@ -89,6 +117,7 @@ export const THEMES = {
         resultEmoji: '🎃',
         badgeEmoji: '👻',
         decoEmojis: ['🎃', '👻', '🦇', '🕷️'],
+        cookieExpireDays: 1,
     },
 
     // -------------------------------------------
@@ -114,5 +143,6 @@ export const THEMES = {
         resultEmoji: '🎁',
         badgeEmoji: '⭐',
         decoEmojis: ['⭐', '❄️', '🎄', '🎁'],
+        cookieExpireDays: 1,
     },
 };

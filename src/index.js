@@ -20,17 +20,17 @@ import { THEMES } from './themes.js';
 //   'christmas'  → Natal (vermelho / verde)
 // ============================================
 
-/**
- * Determina o tema ativo com base na data fornecida.
- * @param {Date} date
- * @returns {string} nome do tema
- */
 function getThemeByDate(date) {
     const month = date.getMonth();
     const day = date.getDate();
 
     // Dia dos Namorados (12 de Junho)
     if (month === 5 && day >= 5 && day <= 13) {
+        return 'namorados';
+    }
+
+    // Valentine's Day (14 de Fevereiro)
+    if (month === 1 && day >= 10 && day <= 15) {
         return 'valentines';
     }
 
@@ -118,6 +118,23 @@ const CookieManager = {
 
     hasPlayed() {
         return this.get(ROULETTE_CONFIG.cookieName) !== null;
+    },
+
+    getPlayedData() {
+        const raw = this.get(ROULETTE_CONFIG.cookieName);
+        if (!raw) return null;
+        try {
+            return JSON.parse(raw);
+        } catch {
+            return null;
+        }
+    },
+
+    getCooldownExpiry() {
+        const data = this.getPlayedData();
+        if (!data || !data.date) return null;
+        const playedDate = new Date(data.date);
+        return new Date(playedDate.getTime() + ROULETTE_CONFIG.cookieExpireDays * 24 * 60 * 60 * 1000);
     },
 
     markAsPlayed(email, prize) {
@@ -410,15 +427,14 @@ function injectRouletteHTML() {
 function applyTheme() {
     const theme = THEMES[ACTIVE_THEME];
     const root = document.getElementById('doxiRouletteRoot');
+    ROULETTE_CONFIG.cookieExpireDays = theme.cookieExpireDays;
 
-    // Aplicar variáveis CSS no container (cascateia para todos os filhos)
     if (root) {
         Object.entries(theme.cssVars).forEach(([key, value]) => {
             root.style.setProperty(key, value);
         });
     }
 
-    // Badge emoji no botão flutuante
     if (theme.badgeEmoji && elements.floatingButton) {
         const badge = document.createElement('span');
         badge.className = 'theme-badge';
@@ -427,7 +443,6 @@ function applyTheme() {
         elements.floatingButton.appendChild(badge);
     }
 
-    // Decoração com emojis no header do modal
     if (theme.decoEmojis && theme.decoEmojis.length > 0) {
         const header = document.querySelector('.fixed-modal-header');
         if (header) {
@@ -445,10 +460,14 @@ function applyTheme() {
         }
     }
 
-    // Marcar tema no modal para CSS específico
     const modal = document.getElementById('rouletteModal');
     if (modal) {
         modal.setAttribute('data-theme', ACTIVE_THEME);
+    }
+
+    const subtitle = document.getElementById('modalSubtitle');
+    if (subtitle && ACTIVE_THEME !== 'default') {
+        subtitle.textContent = `Cupom todo dia para celebrarmos o ${theme.name}`;
     }
 }
 
@@ -471,13 +490,176 @@ function init() {
     applyTheme();
 
     if (CookieManager.hasPlayed()) {
-        elements.floatingButton.style.display = 'none';
+        showCooldownView();
         return;
     }
 
     rouletteWheel = new RouletteWheel(elements.canvas, ROULETTE_CONFIG.prizes);
 
     setupEventListeners();
+}
+
+// ============================================
+// COOLDOWN VIEW (cupom ganho + temporizador)
+// ============================================
+
+function showCooldownView() {
+    const data = CookieManager.getPlayedData();
+    const expiry = CookieManager.getCooldownExpiry();
+    const btn = elements.floatingButton;
+
+    if (!btn || !data || !data.prize) {
+        if (btn) btn.style.display = 'none';
+        return;
+    }
+
+    const prize = data.prize;
+    const couponCode = prize.coupon || prize.text;
+    const discountText = prize.text?.match(/\d+%/)?.[0] || prize.text;
+
+    btn.innerHTML = '';
+    btn.classList.add('cooldown-mode');
+    btn.removeAttribute('aria-label');
+
+    btn.innerHTML = `
+        <!-- Pill minimizada (estado padrão) -->
+        <div class="cd-pill">
+            <span class="cd-pill-gift">🎁</span>
+            <div class="cd-pill-segs">
+                <span class="cd-seg" data-key="days"></span>
+                <span class="cd-seg" data-key="hours"></span>
+                <span class="cd-seg" data-key="minutes"></span>
+            </div>
+            <i class="fas fa-chevron-up cd-pill-arrow"></i>
+        </div>
+
+        <!-- Card expandido (escondido por padrão) -->
+        <div class="cd-expanded">
+            <div class="cd-expanded-top">
+                <div class="cd-expanded-label">
+                    <span>🎉</span>
+                    <span>Seu cupom</span>
+                </div>
+                <button class="cd-collapse-btn" type="button" aria-label="Minimizar">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <div class="cd-coupon" data-coupon="${couponCode}">
+                <span class="cd-coupon-pct">${discountText}</span>
+                <div class="cd-coupon-code-row">
+                    <span class="cd-coupon-code">${couponCode}</span>
+                    <i class="far fa-copy cd-coupon-copy-icon"></i>
+                </div>
+                <span class="cd-coupon-feedback"><i class="fas fa-check"></i> Copiado!</span>
+            </div>
+
+            <span class="cd-timer-label">Nova roleta em:</span>
+            <div class="cd-expanded-timer">
+                <i class="fas fa-clock"></i>
+                <span class="cd-seg" data-key="days"></span>
+                <span class="cd-seg" data-key="hours"></span>
+                <span class="cd-seg" data-key="minutes"></span>
+            </div>
+        </div>
+    `;
+
+    const pill = btn.querySelector('.cd-pill');
+    const expanded = btn.querySelector('.cd-expanded');
+
+    pill.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.classList.add('cd-open');
+    });
+
+    btn.querySelector('.cd-collapse-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.classList.remove('cd-open');
+    });
+
+    const couponEl = btn.querySelector('.cd-coupon');
+    const feedbackEl = btn.querySelector('.cd-coupon-feedback');
+
+    const copyCode = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        try {
+            await navigator.clipboard.writeText(couponCode);
+        } catch {
+            const ta = document.createElement('textarea');
+            ta.value = couponCode;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+        }
+        feedbackEl.classList.add('show');
+        setTimeout(() => feedbackEl.classList.remove('show'), 2000);
+    };
+
+    couponEl.addEventListener('click', copyCode);
+    couponEl.addEventListener('touchstart', (e) => { e.preventDefault(); copyCode(e); });
+
+    btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); });
+
+    if (expiry) {
+        const allSegs = btn.querySelectorAll('.cd-seg');
+        updateCountdown(allSegs, expiry);
+        setInterval(() => updateCountdown(allSegs, expiry), 1000);
+    }
+}
+
+function updateCountdown(segments, expiry) {
+    const now = new Date();
+    const diff = expiry.getTime() - now.getTime();
+
+    if (diff <= 0) {
+        segments.forEach(s => animateSegment(s, '🎉'));
+        setTimeout(() => location.reload(), 1500);
+        return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    const values = { days: `${days}d`, hours: `${hours}h`, minutes: `${minutes}m` };
+
+    segments.forEach(seg => {
+        const key = seg.dataset.key;
+        const newVal = values[key];
+
+        if (key === 'days') {
+            seg.style.display = days === 0 ? 'none' : '';
+            if (days === 0) return;
+        }
+
+        if (seg.textContent !== newVal) {
+            animateSegment(seg, newVal);
+        }
+    });
+}
+
+function animateSegment(el, newText) {
+    if (el.classList.contains('cd-roll-out')) return;
+
+    el.classList.add('cd-roll-out');
+
+    const onOutEnd = () => {
+        el.removeEventListener('animationend', onOutEnd);
+        el.textContent = newText;
+        el.classList.remove('cd-roll-out');
+        el.classList.add('cd-roll-in');
+
+        const onInEnd = () => {
+            el.removeEventListener('animationend', onInEnd);
+            el.classList.remove('cd-roll-in');
+        };
+        el.addEventListener('animationend', onInEnd, { once: true });
+    };
+    el.addEventListener('animationend', onOutEnd, { once: true });
 }
 
 function setupEventListeners() {
@@ -688,11 +870,11 @@ function fireEmojiConfetti(emojis) {
     }), 200);
 
     setTimeout(() => confetti({
-        ...defaults, particleCount: 35, spread: 70, decay: 0.91, scalar: 1.8
+        ...defaults, particleCount: 35, spread: 70, decay: 0.91, scalar: 3
     }), 400);
 
     setTimeout(() => confetti({
-        ...defaults, particleCount: 20, spread: 90, startVelocity: 25, decay: 0.92, scalar: 2.2
+        ...defaults, particleCount: 20, spread: 90, startVelocity: 25, decay: 0.92, scalar: 2.5
     }), 600);
 }
 
