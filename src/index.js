@@ -20,7 +20,34 @@ import { THEMES } from './themes.js';
 //   'christmas'  → Natal (vermelho / verde)
 // ============================================
 
-const ACTIVE_THEME = 'default';
+/**
+ * Determina o tema ativo com base na data fornecida.
+ * @param {Date} date
+ * @returns {string} nome do tema
+ */
+function getThemeByDate(date) {
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    // Dia dos Namorados (12 de Junho)
+    if (month === 5 && day >= 5 && day <= 13) {
+        return 'valentines';
+    }
+
+    // Halloween (31 de Outubro)
+    if ((month === 9 && day >= 24) || (month === 10 && day === 1)) {
+        return 'halloween';
+    }
+
+    // Período natalino completo (01/12 a 31/12)
+    if (month === 11) {
+        return 'christmas';
+    }
+
+    return 'default';
+}
+
+const ACTIVE_THEME = getThemeByDate(new Date());
 
 // ============================================
 // CONFIGURAÇÕES DA ROLETA
