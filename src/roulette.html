@@ -1,5 +1,5 @@
-<button id="rouletteButton" class="floating-button" aria-label="Abrir Roleta da Sorte">
-    <div class="roulette-bubble">
+<button id="rouletteButton" class="doxi-roulete--floating-button" aria-label="Abrir Roleta da Sorte">
+    <div class="doxi-roulete--roulette-bubble">
         <span id="rouletteText">Descontos Doxi</span>
     </div>
     <svg style="border-radius: 50%" version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400"
@@ -12,46 +12,46 @@
     </svg>
 </button>
 
-<div id="rouletteModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-overlay"></div>
-    <div class="modal-content">
-        <div class="fixed-modal-header">
-            <h2 id="modalTitle" class="modal-title">Roleta de Descontos Doxiwear</h2>
-            <button class="modal-close" aria-label="Fechar modal"><i class="fas fa-times"></i></button>
+<div id="rouletteModal" class="doxi-roulete--modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="doxi-roulete--modal-overlay"></div>
+    <div class="doxi-roulete--modal-content">
+        <div class="doxi-roulete--fixed-modal-header">
+            <h2 id="modalTitle" class="doxi-roulete--modal-title">Roleta de Descontos Doxiwear</h2>
+            <button class="doxi-roulete--modal-close" aria-label="Fechar modal"><i class="fas fa-times"></i></button>
         </div>
 
-        <div class="modal-body">
-            <div class="roulette-container">
+        <div class="doxi-roulete--modal-body">
+            <div class="doxi-roulete--roulette-container">
                 <canvas id="rouletteCanvas" width="300" height="300"></canvas>
-                <div class="roulette-pointer"></div>
+                <div class="doxi-roulete--roulette-pointer"></div>
             </div>
 
-            <form id="rouletteForm" class="roulette-form">
-                <div class="form-inputs-container">
-                    <p id="modalSubtitle" class="modal-subtitle">
+            <form id="rouletteForm" class="doxi-roulete--roulette-form">
+                <div class="doxi-roulete--form-inputs-container">
+                    <p id="modalSubtitle" class="doxi-roulete--modal-subtitle">
                         Informe seu e-mail e gire a roleta para concorrer a descontos exclusivos!
                     </p>
-                    <div class="form-group">
+                    <div class="doxi-roulete--form-group">
                         <label for="emailInput">Seu e-mail:</label>
                         <input type="email" id="emailInput" name="email" placeholder="seuemail@exemplo.com"
                             autocomplete="email" inputmode="email" required>
                     </div>
 
-                    <div class="form-group checkbox-group">
-                        <label class="checkbox-label">
+                    <div class="doxi-roulete--form-group doxi-roulete--checkbox-group">
+                        <label class="doxi-roulete--checkbox-label">
                             <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
-                            <span class="checkbox-text">Ao informar meu e-mail, aceito receber comunicações
+                            <span class="doxi-roulete--checkbox-text">Ao informar meu e-mail, aceito receber comunicações
                                 promocionais.</span>
                         </label>
                     </div>
                 </div>
 
-                <button type="submit" class="spin-button" id="spinButton">
-                    <span class="button-text"><i class="fas fa-sync-alt"></i> Girar a Roleta</span>
+                <button type="submit" class="doxi-roulete--spin-button" id="spinButton">
+                    <span class="doxi-roulete--button-text"><i class="fas fa-sync-alt"></i> Girar a Roleta</span>
                 </button>
             </form>
 
-            <div id="resultMessage" class="result-message"></div>
+            <div id="resultMessage" class="doxi-roulete--result-message"></div>
         </div>
     </div>
 </div>

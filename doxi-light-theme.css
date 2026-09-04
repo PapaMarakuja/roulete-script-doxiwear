@@ -77,36 +77,36 @@
 /* =========================================
    Base Input Styles
    ========================================= */
-.input-field-container {
+.doxi-roulete--input-field-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 20px;
 }
 
-.input-label-row {
+.doxi-roulete--input-label-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.input-label {
+.doxi-roulete--input-label {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-main);
 }
 
-.input-right-label {
+.doxi-roulete--input-right-label {
   font-size: 13px;
 }
 
-.input-wrapper {
+.doxi-roulete--input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.input-icon {
+.doxi-roulete--input-icon {
   position: absolute;
   left: 16px;
   color: var(--input-icon);
@@ -114,7 +114,7 @@
   pointer-events: none;
 }
 
-.input-field {
+.doxi-roulete--input-field {
   width: 100%;
   padding: 14px 16px;
   background: var(--input-bg);
@@ -127,24 +127,24 @@
   transition: all 0.2s ease;
 }
 
-.input-field::placeholder {
+.doxi-roulete--input-field::placeholder {
   color: var(--input-placeholder);
 }
 
-.input-field:focus {
+.doxi-roulete--input-field:focus {
   border-color: var(--pink-light);
   box-shadow: 0 0 0 3px rgba(245, 184, 191, 0.2);
 }
 
-.input-has-icon {
+.doxi-roulete--input-has-icon {
   padding-left: 44px;
 }
 
-.input-has-suffix {
+.doxi-roulete--input-has-suffix {
   padding-right: 50px;
 }
 
-.input-suffix {
+.doxi-roulete--input-suffix {
   position: absolute;
   right: 16px;
   display: flex;
@@ -156,7 +156,7 @@
 /* =========================================
    Custom Checkbox
    ========================================= */
-.custom-checkbox-wrapper {
+.doxi-roulete--custom-checkbox-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -165,7 +165,7 @@
   user-select: none;
 }
 
-.custom-checkbox {
+.doxi-roulete--custom-checkbox {
   appearance: none;
   width: 20px;
   height: 20px;
@@ -177,12 +177,12 @@
   transition: all 0.2s;
 }
 
-.custom-checkbox:checked {
+.doxi-roulete--custom-checkbox:checked {
   background: var(--pink-light);
   border-color: var(--pink-light);
 }
 
-.custom-checkbox:checked::after {
+.doxi-roulete--custom-checkbox:checked::after {
   content: "";
   position: absolute;
   left: 6px;
@@ -194,7 +194,7 @@
   transform: rotate(45deg);
 }
 
-.custom-checkbox-label {
+.doxi-roulete--custom-checkbox-label {
   font-size: 14px;
   color: var(--text-muted);
 }

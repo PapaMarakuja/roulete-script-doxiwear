@@ -80,15 +80,15 @@ const ROULETTE_CONFIG = {
 const elements = {
     floatingButton: document.getElementById('rouletteButton'),
     modal: document.getElementById('rouletteModal'),
-    modalOverlay: document.querySelector('.modal-overlay'),
-    modalClose: document.querySelector('.modal-close'),
+    modalOverlay: document.querySelector('.doxi-roulete--modal-overlay'),
+    modalClose: document.querySelector('.doxi-roulete--modal-close'),
     form: document.getElementById('rouletteForm'),
     emailInput: document.getElementById('emailInput'),
     acceptTerms: document.getElementById('acceptTerms'),
     spinButton: document.getElementById('spinButton'),
     canvas: document.getElementById('rouletteCanvas'),
     resultMessage: document.getElementById('resultMessage'),
-    formInputs: document.querySelector('.form-inputs-container')
+    formInputs: document.querySelector('.doxi-roulete--form-inputs-container')
 };
 
 // ============================================
@@ -302,18 +302,18 @@ class RouletteWheel {
 
 const ModalManager = {
     open() {
-        elements.modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        elements.modal.classList.add('doxi-roulete--active');
+        elements.modal.setAttribute('aria-hidden', 'false');
     },
 
     close() {
-        if (!elements.modal.classList.contains('active') || elements.modal.classList.contains('closing')) return;
+        if (!elements.modal.classList.contains('doxi-roulete--active') || elements.modal.classList.contains('doxi-roulete--closing')) return;
 
-        elements.modal.classList.add('closing');
+        elements.modal.classList.add('doxi-roulete--closing');
 
         const handleAnimationEnd = () => {
-            elements.modal.classList.remove('active');
-            elements.modal.classList.remove('closing');
+            elements.modal.classList.remove('doxi-roulete--active');
+            elements.modal.classList.remove('doxi-roulete--closing');
             document.body.style.overflow = '';
             elements.modal.removeEventListener('animationend', handleAnimationEnd);
         };
@@ -328,45 +328,45 @@ const ModalManager = {
 
         const message = success
             ? `
-            <div class="result-content animate-coupon">
-                <span class="copy-feedback"><i class="fas fa-check"></i> Copiado!</span>
+            <div class="doxi-roulete--result-content doxi-roulete--animate-coupon">
+                <span class="doxi-roulete--copy-feedback"><i class="fas fa-check"></i> Copiado!</span>
                 
-                <p class="title">${resultEmoji} PARABÉNS!</p>
+                <p class="doxi-roulete--title">${resultEmoji} PARABÉNS!</p>
                 
-                <div class="coupon-card">
-                    <div class="coupon-left">
-                        <span class="percentage-badge">${discountText}</span>
+                <div class="doxi-roulete--coupon-card">
+                    <div class="doxi-roulete--coupon-left">
+                        <span class="doxi-roulete--percentage-badge">${discountText}</span>
                     </div>
-                    <div class="coupon-right">
-                        <p class="coupon-label">CUPOM DE DESCONTO</p>
-                        <div class="coupon-code-box" data-coupon="${prize.coupon}">
-                            <span class="coupon-code">${prize.coupon}</span>
+                    <div class="doxi-roulete--coupon-right">
+                        <p class="doxi-roulete--coupon-label">CUPOM DE DESCONTO</p>
+                        <div class="doxi-roulete--coupon-code-box" data-coupon="${prize.coupon}">
+                            <span class="doxi-roulete--coupon-code">${prize.coupon}</span>
                             <i class="far fa-copy"></i>
                         </div>
-                        <p class="coupon-hint">Toque para copiar</p>
+                        <p class="doxi-roulete--coupon-hint">Toque para copiar</p>
                     </div>
-                    <div class="coupon-cutout top"></div>
-                    <div class="coupon-cutout bottom"></div>
+                    <div class="doxi-roulete--coupon-cutout doxi-roulete--top"></div>
+                    <div class="doxi-roulete--coupon-cutout doxi-roulete--bottom"></div>
                 </div>
 
             </div>
         `
             : `
-            <div class="result-content error">
+            <div class="doxi-roulete--result-content doxi-roulete--error">
                 <i class="fas fa-times-circle" style="font-size: 3rem; color: var(--error-text);"></i>
                 <p>❌ Ops! Algo deu errado. Tente novamente.</p>
             </div>
             `;
 
         elements.resultMessage.innerHTML = message;
-        elements.resultMessage.className = `result-message show ${success ? 'success' : 'error'}`;
+        elements.resultMessage.className = `doxi-roulete--result-message doxi-roulete--show ${success ? 'doxi-roulete--success' : 'doxi-roulete--error'}`;
 
         if (success) this.initCopy();
     },
 
     initCopy() {
-        const couponWrapper = document.querySelector('.coupon-code-box');
-        const feedback = document.querySelector('.copy-feedback');
+        const couponWrapper = document.querySelector('.doxi-roulete--coupon-code-box');
+        const feedback = document.querySelector('.doxi-roulete--copy-feedback');
 
         if (!couponWrapper || !feedback) return;
 
@@ -376,8 +376,8 @@ const ModalManager = {
             try {
                 await navigator.clipboard.writeText(couponCode);
 
-                feedback.classList.add('show');
-                setTimeout(() => feedback.classList.remove('show'), 2000);
+                feedback.classList.add('doxi-roulete--show');
+                setTimeout(() => feedback.classList.remove('doxi-roulete--show'), 2000);
 
             } catch (err) {
                 console.error('Erro ao copiar:', err);
@@ -391,8 +391,8 @@ const ModalManager = {
 
                 try {
                     document.execCommand('copy');
-                    feedback.classList.add('show');
-                    setTimeout(() => feedback.classList.remove('show'), 2000);
+                    feedback.classList.add('doxi-roulete--show');
+                    setTimeout(() => feedback.classList.remove('doxi-roulete--show'), 2000);
                 } catch (err) {
                     console.error('Falha ao copiar:', err);
                 }
@@ -437,21 +437,21 @@ function applyTheme() {
 
     if (theme.badgeEmoji && elements.floatingButton) {
         const badge = document.createElement('span');
-        badge.className = 'theme-badge';
+        badge.className = 'doxi-roulete--theme-badge';
         badge.setAttribute('aria-hidden', 'true');
         badge.textContent = theme.badgeEmoji;
         elements.floatingButton.appendChild(badge);
     }
 
     if (theme.decoEmojis && theme.decoEmojis.length > 0) {
-        const header = document.querySelector('.fixed-modal-header');
+        const header = document.querySelector('.doxi-roulete--fixed-modal-header');
         if (header) {
             const deco = document.createElement('div');
-            deco.className = 'theme-decoration';
+            deco.className = 'doxi-roulete--theme-decoration';
             deco.setAttribute('aria-hidden', 'true');
             theme.decoEmojis.forEach((emoji, i) => {
                 const span = document.createElement('span');
-                span.className = 'theme-deco-emoji';
+                span.className = 'doxi-roulete--theme-deco-emoji';
                 span.textContent = emoji;
                 span.style.animationDelay = `${i * 0.3}s`;
                 deco.appendChild(span);
@@ -476,15 +476,15 @@ function init() {
 
     elements.floatingButton = document.getElementById('rouletteButton');
     elements.modal = document.getElementById('rouletteModal');
-    elements.modalOverlay = document.querySelector('.modal-overlay');
-    elements.modalClose = document.querySelector('.modal-close');
+    elements.modalOverlay = document.querySelector('.doxi-roulete--modal-overlay');
+    elements.modalClose = document.querySelector('.doxi-roulete--modal-close');
     elements.form = document.getElementById('rouletteForm');
     elements.emailInput = document.getElementById('emailInput');
     elements.acceptTerms = document.getElementById('acceptTerms');
     elements.spinButton = document.getElementById('spinButton');
     elements.canvas = document.getElementById('rouletteCanvas');
     elements.resultMessage = document.getElementById('resultMessage');
-    elements.formInputs = document.querySelector('.form-inputs-container');
+    elements.formInputs = document.querySelector('.doxi-roulete--form-inputs-container');
 
     // Aplicar tema visual
     applyTheme();
@@ -518,67 +518,67 @@ function showCooldownView() {
     const discountText = prize.text?.match(/\d+%/)?.[0] || prize.text;
 
     btn.innerHTML = '';
-    btn.classList.add('cooldown-mode');
+    btn.classList.add('doxi-roulete--cooldown-mode');
     btn.removeAttribute('aria-label');
 
     btn.innerHTML = `
         <!-- Pill minimizada (estado padrão) -->
-        <div class="cd-pill">
-            <span class="cd-pill-gift">🎁</span>
-            <div class="cd-pill-segs">
-                <span class="cd-seg" data-key="days"></span>
-                <span class="cd-seg" data-key="hours"></span>
-                <span class="cd-seg" data-key="minutes"></span>
+        <div class="doxi-roulete--cd-pill">
+            <span class="doxi-roulete--cd-pill-gift">🎁</span>
+            <div class="doxi-roulete--cd-pill-segs">
+                <span class="doxi-roulete--cd-seg" data-key="days"></span>
+                <span class="doxi-roulete--cd-seg" data-key="hours"></span>
+                <span class="doxi-roulete--cd-seg" data-key="minutes"></span>
             </div>
-            <i class="fas fa-chevron-up cd-pill-arrow"></i>
+            <i class="fas fa-chevron-up doxi-roulete--cd-pill-arrow"></i>
         </div>
 
         <!-- Card expandido (escondido por padrão) -->
-        <div class="cd-expanded">
-            <div class="cd-expanded-top">
-                <div class="cd-expanded-label">
+        <div class="doxi-roulete--cd-expanded">
+            <div class="doxi-roulete--cd-expanded-top">
+                <div class="doxi-roulete--cd-expanded-label">
                     <span>🎉</span>
                     <span>Seu cupom</span>
                 </div>
-                <button class="cd-collapse-btn" type="button" aria-label="Minimizar">
+                <button class="doxi-roulete--cd-collapse-btn" type="button" aria-label="Minimizar">
                     <i class="fas fa-chevron-down"></i>
                 </button>
             </div>
 
-            <div class="cd-coupon" data-coupon="${couponCode}">
-                <span class="cd-coupon-pct">${discountText}</span>
-                <div class="cd-coupon-code-row">
-                    <span class="cd-coupon-code">${couponCode}</span>
-                    <i class="far fa-copy cd-coupon-copy-icon"></i>
+            <div class="doxi-roulete--cd-coupon" data-coupon="${couponCode}">
+                <span class="doxi-roulete--cd-coupon-pct">${discountText}</span>
+                <div class="doxi-roulete--cd-coupon-code-row">
+                    <span class="doxi-roulete--cd-coupon-code">${couponCode}</span>
+                    <i class="far fa-copy doxi-roulete--cd-coupon-copy-icon"></i>
                 </div>
-                <span class="cd-coupon-feedback"><i class="fas fa-check"></i> Copiado!</span>
+                <span class="doxi-roulete--cd-coupon-feedback"><i class="fas fa-check"></i> Copiado!</span>
             </div>
 
-            <span class="cd-timer-label">Nova roleta em:</span>
-            <div class="cd-expanded-timer">
+            <span class="doxi-roulete--cd-timer-label">Nova roleta em:</span>
+            <div class="doxi-roulete--cd-expanded-timer">
                 <i class="fas fa-clock"></i>
-                <span class="cd-seg" data-key="days"></span>
-                <span class="cd-seg" data-key="hours"></span>
-                <span class="cd-seg" data-key="minutes"></span>
+                <span class="doxi-roulete--cd-seg" data-key="days"></span>
+                <span class="doxi-roulete--cd-seg" data-key="hours"></span>
+                <span class="doxi-roulete--cd-seg" data-key="minutes"></span>
             </div>
         </div>
     `;
 
-    const pill = btn.querySelector('.cd-pill');
-    const expanded = btn.querySelector('.cd-expanded');
+    const pill = btn.querySelector('.doxi-roulete--cd-pill');
+    const expanded = btn.querySelector('.doxi-roulete--cd-expanded');
 
     pill.addEventListener('click', (e) => {
         e.stopPropagation();
-        btn.classList.add('cd-open');
+        btn.classList.add('doxi-roulete--cd-open');
     });
 
-    btn.querySelector('.cd-collapse-btn').addEventListener('click', (e) => {
+    btn.querySelector('.doxi-roulete--cd-collapse-btn').addEventListener('click', (e) => {
         e.stopPropagation();
-        btn.classList.remove('cd-open');
+        btn.classList.remove('doxi-roulete--cd-open');
     });
 
-    const couponEl = btn.querySelector('.cd-coupon');
-    const feedbackEl = btn.querySelector('.cd-coupon-feedback');
+    const couponEl = btn.querySelector('.doxi-roulete--cd-coupon');
+    const feedbackEl = btn.querySelector('.doxi-roulete--cd-coupon-feedback');
 
     const copyCode = async (e) => {
         e.stopPropagation();
@@ -595,8 +595,8 @@ function showCooldownView() {
             document.execCommand('copy');
             document.body.removeChild(ta);
         }
-        feedbackEl.classList.add('show');
-        setTimeout(() => feedbackEl.classList.remove('show'), 2000);
+        feedbackEl.classList.add('doxi-roulete--show');
+        setTimeout(() => feedbackEl.classList.remove('doxi-roulete--show'), 2000);
     };
 
     couponEl.addEventListener('click', copyCode);
@@ -605,7 +605,7 @@ function showCooldownView() {
     btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); });
 
     if (expiry) {
-        const allSegs = btn.querySelectorAll('.cd-seg');
+        const allSegs = btn.querySelectorAll('.doxi-roulete--cd-seg');
         updateCountdown(allSegs, expiry);
         setInterval(() => updateCountdown(allSegs, expiry), 1000);
     }
@@ -643,19 +643,19 @@ function updateCountdown(segments, expiry) {
 }
 
 function animateSegment(el, newText) {
-    if (el.classList.contains('cd-roll-out')) return;
+    if (el.classList.contains('doxi-roulete--cd-roll-out')) return;
 
-    el.classList.add('cd-roll-out');
+    el.classList.add('doxi-roulete--cd-roll-out');
 
     const onOutEnd = () => {
         el.removeEventListener('animationend', onOutEnd);
         el.textContent = newText;
-        el.classList.remove('cd-roll-out');
-        el.classList.add('cd-roll-in');
+        el.classList.remove('doxi-roulete--cd-roll-out');
+        el.classList.add('doxi-roulete--cd-roll-in');
 
         const onInEnd = () => {
             el.removeEventListener('animationend', onInEnd);
-            el.classList.remove('cd-roll-in');
+            el.classList.remove('doxi-roulete--cd-roll-in');
         };
         el.addEventListener('animationend', onInEnd, { once: true });
     };
@@ -748,9 +748,9 @@ function handleFormSubmit(e) {
 
     // HIDE INPUTS AND CHECKBOX
     if (elements.formInputs) {
-        elements.formInputs.classList.add('hiding-during-spin');
+        elements.formInputs.classList.add('doxi-roulete--hiding-during-spin');
     }
-    elements.spinButton.classList.add('hiding');
+    elements.spinButton.classList.add('doxi-roulete--hiding');
 
     elements.spinButton.disabled = true;
     elements.emailInput.disabled = true;
@@ -832,11 +832,11 @@ function startTextAnimation() {
     setInterval(() => {
         currentTextIndex = (currentTextIndex + 1) % floatingTexts.length;
 
-        textElement.classList.remove('roulette-text-anim');
+        textElement.classList.remove('doxi-roulete--roulette-text-anim');
         void textElement.offsetWidth;
 
         textElement.innerText = floatingTexts[currentTextIndex];
-        textElement.classList.add('roulette-text-anim');
+        textElement.classList.add('doxi-roulete--roulette-text-anim');
     }, 2500);
 }
 

@@ -60,20 +60,20 @@ body {
 }
 
 /* Conteúdo da Página (exemplo) */
-.page-content {
+.doxi-roulete--page-content {
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--spacing-xl);
 }
 
-.page-content h1 {
+.doxi-roulete--page-content h1 {
     font-size: 40px;
     margin-bottom: var(--spacing-lg);
     color: var(--primary-dark);
 }
 
 /* Botão Flutuante */
-.floating-button {
+.doxi-roulete--floating-button {
     position: fixed;
     bottom: 32px;
     right: 32px;
@@ -94,12 +94,12 @@ body {
     animation: pulse 2s infinite;
 }
 
-.floating-button:hover {
+.doxi-roulete--floating-button:hover {
     transform: translateY(-4px) scale(1.05);
     box-shadow: 0 25px 35px -5px rgba(99, 102, 241, 0.4);
 }
 
-.floating-button:active {
+.doxi-roulete--floating-button:active {
     transform: translateY(-2px) scale(1.02);
 }
 
@@ -116,7 +116,7 @@ body {
 }
 
 /* Modal */
-.modal {
+.doxi-roulete--modal {
     display: none;
     position: fixed;
     top: 0;
@@ -127,13 +127,13 @@ body {
     animation: fadeIn var(--transition-normal);
 }
 
-.modal.active {
+.doxi-roulete--modal.doxi-roulete--active {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.modal-overlay {
+.doxi-roulete--modal-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -144,7 +144,7 @@ body {
     display: block !important;
 }
 
-.modal-content {
+.doxi-roulete--modal-content {
     position: relative;
     background: var(--card-bg);
     border-radius: var(--radius-lg);
@@ -183,11 +183,11 @@ body {
     }
 }
 
-.modal.closing {
+.doxi-roulete--modal.doxi-roulete--closing {
     animation: fadeOut var(--transition-normal) forwards;
 }
 
-.modal.closing .modal-content {
+.doxi-roulete--modal.doxi-roulete--closing .doxi-roulete--modal-content {
     animation: slideDownClose var(--transition-normal) forwards;
 }
 
@@ -213,7 +213,7 @@ body {
     }
 }
 
-.fixed-modal-header {
+.doxi-roulete--fixed-modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -224,7 +224,7 @@ body {
     flex-shrink: 0;
 }
 
-.modal-body {
+.doxi-roulete--modal-body {
     padding: var(--spacing-sm);
     overflow-y: auto;
     flex: 1;
@@ -232,7 +232,7 @@ body {
 }
 
 /* Botão de Fechar */
-.modal-close {
+.doxi-roulete--modal-close {
     background-color: #0000;
     border: none;
     font-size: 24px;
@@ -247,13 +247,13 @@ body {
     border-radius: 50%;
 }
 
-.modal-close:hover {
+.doxi-roulete--modal-close:hover {
     background: rgba(255, 255, 255, 0.6);
     color: var(--text-primary);
 }
 
 /* Título do Modal */
-.modal-title {
+.doxi-roulete--modal-title {
     font-size: 32px;
     font-weight: 700;
     text-align: start;
@@ -262,7 +262,7 @@ body {
     letter-spacing: -0.02em;
 }
 
-.modal-subtitle {
+.doxi-roulete--modal-subtitle {
     font-size: 22px;
     font-weight: 500;
     text-align: center;
@@ -271,7 +271,7 @@ body {
 }
 
 /* Container da Roleta */
-.roulette-container {
+.doxi-roulete--roulette-container {
     position: relative;
     width: 350px;
     height: 350px;
@@ -285,7 +285,7 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
-.roulette-pointer {
+.doxi-roulete--roulette-pointer {
     display: block !important;
     position: absolute;
     top: 50%;
@@ -303,24 +303,24 @@ body {
 }
 
 /* Formulário */
-.roulette-form {
+.doxi-roulete--roulette-form {
     display: flex;
     flex-direction: column;
 }
 
-.form-group {
+.doxi-roulete--form-group {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xxs);
 }
 
-.form-group label {
+.doxi-roulete--form-group label {
     font-weight: 600;
     color: var(--text-primary);
     font-size: 16px;
 }
 
-.form-group input[type="email"] {
+.doxi-roulete--form-group input[type="email"] {
     padding: 14px 16px;
     background: var(--input-bg);
     border: 1.5px solid transparent;
@@ -332,17 +332,17 @@ body {
     transition: all 0.2s ease;
 }
 
-.form-group input[type="email"]:focus {
+.doxi-roulete--form-group input[type="email"]:focus {
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
 }
 
 /* Checkbox */
-.checkbox-group {
+.doxi-roulete--checkbox-group {
     margin-top: var(--spacing-xxs);
 }
 
-.checkbox-label {
+.doxi-roulete--checkbox-label {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -350,7 +350,7 @@ body {
     user-select: none;
 }
 
-.checkbox-label input[type="checkbox"] {
+.doxi-roulete--checkbox-label input[type="checkbox"] {
     margin-top: 4px;
     width: 18px;
     height: 18px;
@@ -358,14 +358,14 @@ body {
     accent-color: var(--primary-color);
 }
 
-.checkbox-text {
+.doxi-roulete--checkbox-text {
     font-size: 14px;
     color: var(--text-secondary);
     line-height: 1.5;
 }
 
 /* Botão de Girar */
-.spin-button {
+.doxi-roulete--spin-button {
     background: linear-gradient(135deg, var(--secondary-color), var(--secondary-hover));
     color: var(--navy);
     border: none;
@@ -383,23 +383,23 @@ body {
     letter-spacing: 0.05em;
 }
 
-.spin-button:hover {
+.doxi-roulete--spin-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     filter: brightness(1.05);
 }
 
-.spin-button:active {
+.doxi-roulete--spin-button:active {
     transform: translateY(0);
 }
 
-.spin-button:disabled {
+.doxi-roulete--spin-button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
 }
 
-.spin-button.hiding {
+.doxi-roulete--spin-button.doxi-roulete--hiding {
     height: 0 !important;
     opacity: 0;
     padding-top: 0;
@@ -412,13 +412,13 @@ body {
     transition: all 300ms ease-in-out;
 }
 
-.button-text {
+.doxi-roulete--button-text {
     position: relative;
     z-index: 1;
 }
 
 /* Mensagem de Resultado */
-.result-message {
+.doxi-roulete--result-message {
     margin-top: var(--spacing-lg);
     padding: var(--spacing-md);
     border-radius: var(--radius-md);
@@ -429,17 +429,17 @@ body {
     padding-bottom: 46px;
 }
 
-.result-message.show {
+.doxi-roulete--result-message.doxi-roulete--show {
     display: block;
 }
 
-.result-message.success {
+.doxi-roulete--result-message.doxi-roulete--success {
     background: #ecfdf5;
     color: var(--success);
     border: 1px solid #a7f3d0;
 }
 
-.result-message.error {
+.doxi-roulete--result-message.doxi-roulete--error {
     background: #fef2f2;
     color: var(--error-text);
     border: 1px solid #fecaca;
@@ -459,29 +459,29 @@ body {
 
 /* Responsividade */
 @media (max-width: 640px) {
-    .floating-button {
+    .doxi-roulete--floating-button {
         bottom: 15%;
         right: 24px;
         padding: 14px 20px;
         font-size: 16px;
     }
 
-    .modal-content {
+    .doxi-roulete--modal-content {
         padding: var(--spacing-sm);
         padding-top: 0;
         width: 95%;
     }
 
-    .modal-title {
+    .doxi-roulete--modal-title {
         font-size: 24px;
     }
 
-    .roulette-container {
+    .doxi-roulete--roulette-container {
         width: 250px;
         height: 250px;
     }
 
-    .spin-button {
+    .doxi-roulete--spin-button {
         padding: 14px 24px;
         font-size: 16px;
     }
@@ -498,37 +498,37 @@ body {
     }
 }
 
-.spinning {
+.doxi-roulete--spinning {
     animation: spin 0.1s linear infinite;
 }
 
 /* --- Estilos para o Cupom --- */
 
-.result-content {
+.doxi-roulete--result-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
 }
 
-.result-content .title {
+.doxi-roulete--result-content .doxi-roulete--title {
     font-size: 24px;
     font-weight: 700;
     color: var(--navy);
     margin: 0 !important;
 }
 
-.result-content p {
+.doxi-roulete--result-content p {
     font-size: 18px;
     color: #333;
 }
 
-.result-content p strong {
+.doxi-roulete--result-content p strong {
     color: #10b981;
 }
 
 /* Container do cupom */
-.coupon-wrapper {
+.doxi-roulete--coupon-wrapper {
     position: relative;
     display: inline-flex;
     padding: 12px 24px;
@@ -541,12 +541,12 @@ body {
     margin: 10px 0;
 }
 
-.coupon-wrapper:hover {
+.doxi-roulete--coupon-wrapper:hover {
     transform: scale(1.05);
 }
 
 /* O código do cupom */
-.coupon {
+.doxi-roulete--coupon {
     font-family: 'Courier New', monospace;
     font-size: 24px;
     font-weight: 800;
@@ -556,14 +556,14 @@ body {
 }
 
 /* Dica visual */
-.hint {
+.doxi-roulete--hint {
     font-size: 13px;
     color: #666;
     white-space: nowrap;
 }
 
 /* Feedback de "copiado" */
-.copy-feedback {
+.doxi-roulete--copy-feedback {
     display: none;
     margin-top: 8px;
     font-size: 14px;
@@ -571,7 +571,7 @@ body {
     font-weight: 600;
 }
 
-.copy-feedback.show {
+.doxi-roulete--copy-feedback.doxi-roulete--show {
     display: block;
     animation: fadeInOutFeedback 2s ease-in-out forwards;
 }
@@ -610,17 +610,17 @@ body {
 
 /* Responsividade para o cupom */
 @media (max-width: 640px) {
-    .coupon {
+    .doxi-roulete--coupon {
         font-size: 20px;
     }
 
-    .hint {
+    .doxi-roulete--hint {
         font-size: 12px;
     }
 }
 
 /* Floating Button Restyling for SVG */
-.floating-button {
+.doxi-roulete--floating-button {
     background: none !important;
     border: none !important;
     box-shadow: none !important;
@@ -637,19 +637,19 @@ body {
     overflow: visible !important;
 }
 
-.floating-button svg {
+.doxi-roulete--floating-button svg {
     width: 100%;
     height: 100%;
     filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.2));
     transition: transform 0.3s ease;
 }
 
-.floating-button:hover svg {
+.doxi-roulete--floating-button:hover svg {
     transform: scale(1.1) rotate(10deg);
 }
 
 /* Bubble Container */
-.roulette-bubble {
+.doxi-roulete--roulette-bubble {
     position: absolute;
     bottom: 90%;
     left: 50%;
@@ -672,7 +672,7 @@ body {
 }
 
 /* Triangle for bubble */
-.roulette-bubble::after {
+.doxi-roulete--roulette-bubble::after {
     content: '';
     position: absolute;
     top: 100%;
@@ -719,12 +719,12 @@ body {
     }
 }
 
-.roulette-text-anim {
+.doxi-roulete--roulette-text-anim {
     animation: textFadeIn 0.5s ease-out forwards;
 }
 
 /* Animation to hide inputs during spin - improved for friendliness */
-.form-inputs-container {
+.doxi-roulete--form-inputs-container {
     transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.5s ease, margin 0.5s ease, padding 0.5s ease;
     opacity: 1;
     transform: translateY(0);
@@ -732,7 +732,7 @@ body {
     overflow: hidden;
 }
 
-.form-inputs-container.hiding-during-spin {
+.doxi-roulete--form-inputs-container.doxi-roulete--hiding-during-spin {
     opacity: 0;
     transform: translateY(-10px);
     max-height: 0;
@@ -743,11 +743,11 @@ body {
     pointer-events: none;
 }
 
-.spin-button {
+.doxi-roulete--spin-button {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.spin-button.hiding {
+.doxi-roulete--spin-button.doxi-roulete--hiding {
     opacity: 0;
     transform: scale(0.9) translateY(10px);
     pointer-events: none;
@@ -757,7 +757,7 @@ body {
 }
 
 /* Coupon Card Aesthetics */
-.coupon-card {
+.doxi-roulete--coupon-card {
     display: flex;
     background: #fff;
     border-radius: var(--radius-md);
@@ -768,7 +768,7 @@ body {
     min-height: 100px;
 }
 
-.coupon-left {
+.doxi-roulete--coupon-left {
     background: var(--secondary-color);
     display: flex;
     align-items: center;
@@ -777,14 +777,14 @@ body {
     min-width: 80px;
 }
 
-.percentage-badge {
+.doxi-roulete--percentage-badge {
     color: var(--text-white);
     font-size: 24px;
     font-weight: 800;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.coupon-right {
+.doxi-roulete--coupon-right {
     flex: 1;
     padding: var(--spacing-md);
     display: flex;
@@ -794,7 +794,7 @@ body {
     gap: var(--spacing-xxs);
 }
 
-.coupon-label {
+.doxi-roulete--coupon-label {
     font-size: 11px;
     font-weight: 700;
     color: var(--text-secondary);
@@ -802,7 +802,7 @@ body {
     text-transform: uppercase;
 }
 
-.coupon-code-box {
+.doxi-roulete--coupon-code-box {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
@@ -813,24 +813,24 @@ body {
     transition: background var(--transition-fast);
 }
 
-.coupon-code-box:hover {
+.doxi-roulete--coupon-code-box:hover {
     background: #eef2f5;
 }
 
-.coupon-code {
+.doxi-roulete--coupon-code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 20px;
     font-weight: 800;
     color: var(--primary-color);
 }
 
-.coupon-hint {
+.doxi-roulete--coupon-hint {
     font-size: 11px;
     color: var(--text-secondary);
     font-style: italic;
 }
 
-.coupon-cutout {
+.doxi-roulete--coupon-cutout {
     position: absolute;
     width: 20px;
     height: 20px;
@@ -839,16 +839,16 @@ body {
     left: 70px;
 }
 
-.coupon-cutout.top {
+.doxi-roulete--coupon-cutout.doxi-roulete--top {
     top: -10px;
 }
 
-.coupon-cutout.bottom {
+.doxi-roulete--coupon-cutout.doxi-roulete--bottom {
     bottom: -10px;
 }
 
 /* Animations for result */
-.animate-coupon {
+.doxi-roulete--animate-coupon {
     animation: fadeInUp var(--transition-normal) forwards;
 }
 
@@ -864,7 +864,7 @@ body {
     }
 }
 
-.copy-feedback {
+.doxi-roulete--copy-feedback {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
@@ -876,11 +876,11 @@ body {
     margin: 0 !important;
 }
 
-.copy-feedback.show {
+.doxi-roulete--copy-feedback.doxi-roulete--show {
     opacity: 1;
 }
 
-.success-icon {
+.doxi-roulete--success-icon {
     font-size: 48px;
     color: #10b981;
 }
@@ -890,7 +890,7 @@ body {
    ============================================ */
 
 /* Badge emoji no botão flutuante */
-.theme-badge {
+.doxi-roulete--theme-badge {
     position: absolute;
     top: 0;
     right: -8px;
@@ -934,7 +934,7 @@ body {
 }
 
 /* Faixa decorativa de emojis no header do modal */
-.theme-decoration {
+.doxi-roulete--theme-decoration {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -943,7 +943,7 @@ body {
     flex-shrink: 0;
 }
 
-.theme-deco-emoji {
+.doxi-roulete--theme-deco-emoji {
     font-size: 22px;
     display: inline-block;
     animation: decoFloat 2.8s ease-in-out infinite;
@@ -963,74 +963,74 @@ body {
 }
 
 /* Ponteiro temático */
-#doxiRouletteRoot .roulette-pointer {
+#doxiRouletteRoot .doxi-roulete--roulette-pointer {
     border-right-color: var(--primary-color);
 }
 
 /* ---- Tema: Halloween ---- */
-[data-theme="halloween"] .modal-title {
+[data-theme="halloween"] .doxi-roulete--modal-title {
     color: #FF6B00;
 }
 
-[data-theme="halloween"] .result-message.success {
+[data-theme="halloween"] .doxi-roulete--result-message.doxi-roulete--success {
     background: #1a0a2e;
     border-color: #FF6B00;
     color: #FF8C00;
 }
 
-[data-theme="halloween"] .result-content .title {
+[data-theme="halloween"] .doxi-roulete--result-content .doxi-roulete--title {
     color: #FF6B00;
 }
 
-[data-theme="halloween"] .coupon-card {
+[data-theme="halloween"] .doxi-roulete--coupon-card {
     background: #1a0a2e;
     border-color: #FF6B00;
 }
 
-[data-theme="halloween"] .coupon-code {
+[data-theme="halloween"] .doxi-roulete--coupon-code {
     color: #FF8C00;
 }
 
-[data-theme="halloween"] .coupon-label,
-[data-theme="halloween"] .coupon-hint {
+[data-theme="halloween"] .doxi-roulete--coupon-label,
+[data-theme="halloween"] .doxi-roulete--coupon-hint {
     color: #b08ee0;
 }
 
 /* ---- Tema: Christmas ---- */
-[data-theme="christmas"] .modal-title {
+[data-theme="christmas"] .doxi-roulete--modal-title {
     color: #165C30;
 }
 
-[data-theme="christmas"] .result-message.success {
+[data-theme="christmas"] .doxi-roulete--result-message.doxi-roulete--success {
     background: #f0faf4;
     border-color: #165C30;
     color: #165C30;
 }
 
-[data-theme="christmas"] .result-content .title {
+[data-theme="christmas"] .doxi-roulete--result-content .doxi-roulete--title {
     color: #165C30;
 }
 
-[data-theme="christmas"] .coupon-code {
+[data-theme="christmas"] .doxi-roulete--coupon-code {
     color: #165C30;
 }
 
 /* ---- Tema: Valentines ---- */
-[data-theme="valentines"] .modal-title {
+[data-theme="valentines"] .doxi-roulete--modal-title {
     color: #B5254B;
 }
 
-[data-theme="valentines"] .result-message.success {
+[data-theme="valentines"] .doxi-roulete--result-message.doxi-roulete--success {
     background: #fff0f4;
     border-color: #FF6B8B;
     color: #B5254B;
 }
 
-[data-theme="valentines"] .result-content .title {
+[data-theme="valentines"] .doxi-roulete--result-content .doxi-roulete--title {
     color: #B5254B;
 }
 
-[data-theme="valentines"] .coupon-code {
+[data-theme="valentines"] .doxi-roulete--coupon-code {
     color: #B5254B;
 }
 
@@ -1039,7 +1039,7 @@ body {
    ============================================ */
 
 /* ---- Base do floating button em cooldown ---- */
-.floating-button.cooldown-mode {
+.doxi-roulete--floating-button.doxi-roulete--cooldown-mode {
     width: auto !important;
     height: auto !important;
     animation: none !important;
@@ -1050,13 +1050,13 @@ body {
     right: 24px;
 }
 
-.floating-button.cooldown-mode:hover {
+.doxi-roulete--floating-button.doxi-roulete--cooldown-mode:hover {
     transform: none;
     box-shadow: none;
 }
 
 /* ---- Pill (estado minimizado — padrão) ---- */
-.cd-pill {
+.doxi-roulete--cd-pill {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -1073,12 +1073,12 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-.cd-pill:hover {
+.doxi-roulete--cd-pill:hover {
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
     transform: translateY(-2px);
 }
 
-.cd-pill:active {
+.doxi-roulete--cd-pill:active {
     transform: scale(0.97);
 }
 
@@ -1087,12 +1087,12 @@ body {
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.cd-pill-gift {
+.doxi-roulete--cd-pill-gift {
     font-size: 18px;
     line-height: 1;
 }
 
-.cd-pill-segs {
+.doxi-roulete--cd-pill-segs {
     display: flex;
     gap: 4px;
     font-size: 13px;
@@ -1100,23 +1100,23 @@ body {
     color: var(--primary-color, #204457);
 }
 
-.cd-pill-arrow {
+.doxi-roulete--cd-pill-arrow {
     font-size: 10px;
     color: var(--text-secondary, #999);
     transition: transform 0.2s ease;
 }
 
-.cd-pill:hover .cd-pill-arrow {
+.doxi-roulete--cd-pill:hover .doxi-roulete--cd-pill-arrow {
     transform: translateY(-2px);
 }
 
 /* Esconder pill quando expandido */
-.floating-button.cd-open .cd-pill {
+.doxi-roulete--floating-button.doxi-roulete--cd-open .doxi-roulete--cd-pill {
     display: none;
 }
 
 /* ---- Expanded card (escondido por padrão) ---- */
-.cd-expanded {
+.doxi-roulete--cd-expanded {
     display: none;
     flex-direction: column;
     gap: 10px;
@@ -1131,12 +1131,12 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.floating-button.cd-open .cd-expanded {
+.doxi-roulete--floating-button.doxi-roulete--cd-open .doxi-roulete--cd-expanded {
     display: flex;
     animation: cdExpandIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-.floating-button.cd-open {
+.doxi-roulete--floating-button.doxi-roulete--cd-open {
     border-radius: 16px !important;
 }
 
@@ -1145,13 +1145,13 @@ body {
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.cd-expanded-top {
+.doxi-roulete--cd-expanded-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.cd-expanded-label {
+.doxi-roulete--cd-expanded-label {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -1162,7 +1162,7 @@ body {
     letter-spacing: 0.04em;
 }
 
-.cd-collapse-btn {
+.doxi-roulete--cd-collapse-btn {
     background: none;
     border: none;
     color: var(--text-secondary, #999);
@@ -1174,13 +1174,13 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-.cd-collapse-btn:hover {
+.doxi-roulete--cd-collapse-btn:hover {
     background: rgba(0, 0, 0, 0.05);
     color: var(--primary-color, #204457);
 }
 
 /* ---- Cupom dentro do card expandido ---- */
-.cd-coupon {
+.doxi-roulete--cd-coupon {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1194,29 +1194,29 @@ body {
     position: relative;
 }
 
-.cd-coupon:hover {
+.doxi-roulete--cd-coupon:hover {
     background: #eef2f5;
     transform: scale(1.02);
 }
 
-.cd-coupon:active {
+.doxi-roulete--cd-coupon:active {
     transform: scale(0.97);
 }
 
-.cd-coupon-pct {
+.doxi-roulete--cd-coupon-pct {
     font-size: 20px;
     font-weight: 800;
     color: var(--secondary-color, #d4a0a2);
     line-height: 1;
 }
 
-.cd-coupon-code-row {
+.doxi-roulete--cd-coupon-code-row {
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.cd-coupon-code {
+.doxi-roulete--cd-coupon-code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 15px;
     font-weight: 800;
@@ -1224,17 +1224,17 @@ body {
     letter-spacing: 1px;
 }
 
-.cd-coupon-copy-icon {
+.doxi-roulete--cd-coupon-copy-icon {
     font-size: 12px;
     color: var(--text-secondary, #999);
     transition: color 0.15s ease;
 }
 
-.cd-coupon:hover .cd-coupon-copy-icon {
+.doxi-roulete--cd-coupon:hover .doxi-roulete--cd-coupon-copy-icon {
     color: var(--primary-color, #204457);
 }
 
-.cd-coupon-feedback {
+.doxi-roulete--cd-coupon-feedback {
     position: absolute;
     inset: 0;
     display: flex;
@@ -1250,11 +1250,11 @@ body {
     pointer-events: none;
 }
 
-.cd-coupon-feedback.show {
+.doxi-roulete--cd-coupon-feedback.doxi-roulete--show {
     opacity: 1;
 }
 
-.cd-timer-label {
+.doxi-roulete--cd-timer-label {
     text-align: center;
     font-size: 10px;
     font-weight: 700;
@@ -1266,7 +1266,7 @@ body {
 }
 
 /* ---- Timer no card expandido ---- */
-.cd-expanded-timer {
+.doxi-roulete--cd-expanded-timer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1279,7 +1279,7 @@ body {
     font-weight: 600;
 }
 
-.cd-expanded-timer > i {
+.doxi-roulete--cd-expanded-timer > i {
     font-size: 10px;
     opacity: 0.7;
     animation: cdTimerPulse 2s ease-in-out infinite;
@@ -1291,7 +1291,7 @@ body {
 }
 
 /* ---- Segmentos do countdown (compartilhado) ---- */
-.cd-seg {
+.doxi-roulete--cd-seg {
     display: inline-block;
     overflow: hidden;
     line-height: 1;
@@ -1299,11 +1299,11 @@ body {
 }
 
 /* ---- Rolling / Odometer animation ---- */
-.cd-seg.cd-roll-out {
+.doxi-roulete--cd-seg.doxi-roulete--cd-roll-out {
     animation: cdRollOut 180ms ease-in forwards;
 }
 
-.cd-seg.cd-roll-in {
+.doxi-roulete--cd-seg.doxi-roulete--cd-roll-in {
     animation: cdRollIn 250ms ease-out forwards;
 }
 
@@ -1331,36 +1331,35 @@ body {
 
 /* ---- Mobile ---- */
 @media (max-width: 640px) {
-    .floating-button.cooldown-mode {
+    .doxi-roulete--floating-button.doxi-roulete--cooldown-mode {
         bottom: 12%;
         right: 16px;
     }
 
-    .cd-pill {
+    .doxi-roulete--cd-pill {
         padding: 7px 12px;
         gap: 6px;
     }
 
-    .cd-pill-gift {
+    .doxi-roulete--cd-pill-gift {
         font-size: 16px;
     }
 
-    .cd-pill-segs {
+    .doxi-roulete--cd-pill-segs {
         font-size: 12px;
     }
 
-    .cd-expanded {
+    .doxi-roulete--cd-expanded {
         min-width: 190px;
         max-width: 220px;
         padding: 12px 14px;
     }
 
-    .cd-coupon-pct {
+    .doxi-roulete--cd-coupon-pct {
         font-size: 18px;
     }
 
-    .cd-coupon-code {
+    .doxi-roulete--cd-coupon-code {
         font-size: 13px;
     }
 }
-
